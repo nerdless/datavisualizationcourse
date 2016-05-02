@@ -8,6 +8,11 @@ columns = range(13)
 global_df = pd.read_csv(data_path + 'GLB.Ts+dSST.csv', usecols=columns, na_values='**** ', index_col=0)
 north_df = pd.read_csv(data_path + 'NH.Ts+dSST.csv', usecols=columns, na_values='**** ', index_col=0)
 south_df = pd.read_csv(data_path + 'SH.Ts+dSST.csv', usecols=columns, na_values='**** ', index_col=0)
+#I just want to plot the last 2 years to get a clear viz
+global_df = global_df.loc[2013:2015]
+north_df = north_df.loc[2013:2015]
+south_df = south_df.loc[2013:2015]
+
 
 # This dict is used to rename the columns
 months_dict = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04',
@@ -28,6 +33,7 @@ for year in global_df.index.tolist():
         formated.loc[str(year) + month, 'south'] = south_df.loc[year, month]
 
 formated.dropna(how='all', inplace=True)
+
 formated.to_csv(data_path + 'formated.csv', index_label='date')  # Save as csv
 
 
